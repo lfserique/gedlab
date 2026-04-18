@@ -70,7 +70,7 @@ O sistema foi organizado em arquivos PHP com responsabilidades bem definidas.
   - `openssl`
   - `fileinfo`
 
-## Tutorial Didade Instalação: Ubuntu Linux + Apache + PHP + MySQL
+## Tutorial de Instalação: Ubuntu Linux + Apache + PHP + MySQL
 
 Esta secao apresenta um roteiro completo, do ambiente limpo ate a aplicacao em funcionamento.
 
