@@ -1,0 +1,7 @@
+config.php
+serique.p12
+teste-upload.txt
+*.log
+*.tmp
+Thumbs.db
+.DS_Store
