@@ -1,108 +1,108 @@
 # GEDLab
 
-## Resumo
+## 📘 Resumo
 
-O GEDLab e uma aplicacao web desenvolvida em PHP para demonstrar um fluxo de gestao eletronica de documentos com mecanismos de autenticacao, criptografia de arquivos sigilosos, assinatura digital baseada em certificados no formato `.p12` ou `.pfx` e trilha de auditoria com encadeamento criptografico de eventos.
+O GEDLab é uma aplicação web desenvolvida em PHP para demonstrar um fluxo de gestão eletrônica de documentos com mecanismos de autenticação, criptografia de arquivos sigilosos, assinatura digital baseada em certificados no formato `.p12` ou `.pfx` e trilha de auditoria com encadeamento criptográfico de eventos.
 
-O projeto pode ser empregado como base didatica, prototipo academico ou demonstracao tecnica de conceitos relacionados a integridade de dados, rastreabilidade de operacoes e protecao de documentos digitais.
+O projeto pode ser empregado como base didática, protótipo acadêmico ou demonstração técnica de conceitos relacionados à integridade de dados, rastreabilidade de operações e proteção de documentos digitais.
 
-## Objetivo
+## 🎯 Objetivo
 
-O objetivo central deste projeto e integrar, em uma unica aplicacao, um conjunto de mecanismos frequentemente discutidos em contextos de seguranca da informacao e sistemas documentais, a saber:
+O objetivo central deste projeto é integrar, em uma única aplicação, um conjunto de mecanismos frequentemente discutidos em contextos de segurança da informação e sistemas documentais, a saber:
 
 - controle de acesso autenticado
 - armazenamento de documentos comuns e sigilosos
-- criptografia simetrica para protecao de conteudo sensivel
+- criptografia simétrica para proteção de conteúdo sensível
 - assinatura digital com certificados pessoais
-- verificacao posterior de autenticidade
-- auditoria imutavel por encadeamento de hashes
+- verificação posterior de autenticidade
+- auditoria imutável por encadeamento de hashes
 
-## Problema Abordado
+## 🧩 Problema Abordado
 
-Em ambientes organizacionais, a gestao de documentos exige nao apenas armazenamento e consulta, mas tambem mecanismos que permitam:
+Em ambientes organizacionais, a gestão de documentos exige não apenas armazenamento e consulta, mas também mecanismos que permitam:
 
-- restringir acesso a conteudos sensiveis
+- restringir acesso a conteúdos sensíveis
 - garantir a integridade dos arquivos armazenados
-- identificar quem realizou determinada operacao
-- registrar evidencias de visualizacao, upload e assinatura
-- permitir validacao posterior de autenticidade e rastreabilidade
+- identificar quem realizou determinada operação
+- registrar evidências de visualização, upload e assinatura
+- permitir validação posterior de autenticidade e rastreabilidade
 
-O GEDLab foi estruturado para abordar esses aspectos de forma integrada e com implementacao direta em PHP e MySQL.
+O GEDLab foi estruturado para abordar esses aspectos de forma integrada e com implementação direta em PHP e MySQL.
 
-## Funcionalidades Implementadas
+## ✅ Funcionalidades Implementadas
 
-- autenticacao de usuarios
+- autenticação de usuários
 - painel central com listagem de documentos
 - upload de arquivos com metadados
-- classificacao de documentos sigilosos
+- classificação de documentos sigilosos
 - criptografia de documentos sigilosos com AES-256-GCM
 - assinatura digital de documentos com certificado `.p12` ou `.pfx`
-- verificacao de assinaturas registradas no sistema
-- trilha de auditoria com cadeia de hashes para validacao de integridade
+- verificação de assinaturas registradas no sistema
+- trilha de auditoria com cadeia de hashes para validação de integridade
 
-## Arquitetura Geral
+## 🏗️ Arquitetura Geral
 
 O sistema foi organizado em arquivos PHP com responsabilidades bem definidas.
 
-- `login.php`: autentica o usuario
-- `dashboard.php`: apresenta o painel principal da aplicacao
+- `login.php`: autentica o usuário
+- `dashboard.php`: apresenta o painel principal da aplicação
 - `upload.php`: processa o envio de documentos
 - `sign_document.php`: realiza a assinatura digital
 - `verify_signature.php`: valida assinaturas previamente armazenadas
 - `audit.php`: exibe os eventos registrados na cadeia de auditoria
-- `blockchain.php`: concentra a logica de hash, verificacao e reparo da cadeia
+- `blockchain.php`: concentra a lógica de hash, verificação e reparo da cadeia
 - `crypto.php`: implementa a criptografia e a descriptografia dos documentos
-- `database.sql`: contem a estrutura inicial do banco de dados
+- `database.sql`: contém a estrutura inicial do banco de dados
 
-## Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
 
 - PHP 8.2 ou superior
-- MySQL 8.x ou MariaDB compativel
+- MySQL 8.x ou MariaDB compatível
 - HTML e CSS para a interface
-- OpenSSL para operacoes criptograficas e assinatura digital
+- OpenSSL para operações criptográficas e assinatura digital
 
-## Requisitos de Execucao
+## 📋 Requisitos de Execução
 
 - PHP 8.2 ou superior
-- MySQL 8.x ou MariaDB compativel
-- extensoes PHP habilitadas:
+- MySQL 8.x ou MariaDB compatível
+- extensões PHP habilitadas:
   - `pdo_mysql`
   - `openssl`
   - `fileinfo`
 
-## Tutorial de Instalação: Ubuntu Linux + Apache + PHP + MySQL
+## 🐧 Tutorial de Instalação: Ubuntu Linux + Apache + PHP + MySQL
 
-Esta secao apresenta um roteiro completo, do ambiente limpo ate a aplicacao em funcionamento.
+Esta seção apresenta um roteiro completo, do ambiente limpo até a aplicação em funcionamento.
 
-### Passo 1. Atualizar o sistema
+### 1. Atualizar o sistema
 
 ```bash
 sudo apt update
 sudo apt upgrade -y
 ```
 
-### Passo 2. Instalar Apache, PHP, MySQL e utilitarios
+### 2. Instalar Apache, PHP, MySQL e utilitários
 
 ```bash
 sudo apt install -y apache2 mysql-server git unzip
 sudo apt install -y php libapache2-mod-php php-mysql php-cli php-common php-mbstring php-xml php-curl
 ```
 
-### Passo 3. Verificar servicos
+### 3. Verificar serviços
 
 ```bash
 sudo systemctl status apache2
 sudo systemctl status mysql
 ```
 
-Se necessario, inicie e habilite os servicos:
+Se necessário, inicie e habilite os serviços:
 
 ```bash
 sudo systemctl start apache2 mysql
 sudo systemctl enable apache2 mysql
 ```
 
-### Passo 4. Verificar versoes instaladas
+### 4. Verificar versões instaladas
 
 ```bash
 php -v
@@ -110,17 +110,17 @@ mysql --version
 apache2 -v
 ```
 
-### Passo 5. Verificar extensoes PHP obrigatorias
+### 5. Verificar extensões PHP obrigatórias
 
 ```bash
 php -m | grep -E "pdo_mysql|openssl|fileinfo"
 ```
 
-Caso alguma extensao nao apareca, instale ou habilite e reinicie o Apache.
+Caso alguma extensão não apareça, instale ou habilite e reinicie o Apache.
 
-### Passo 6. Baixar o projeto no servidor
+### 6. Baixar o projeto no servidor
 
-Escolha um diretorio de publicacao. Neste tutorial, sera usado `/var/www/gedlab`.
+Escolha um diretório de publicação. Neste tutorial, será usado `/var/www/gedlab`.
 
 ```bash
 cd /var/www
@@ -128,7 +128,7 @@ sudo git clone https://github.com/lfserique/gedlab gedlab
 cd gedlab
 ```
 
-### Passo 7. Configurar o arquivo de ambiente da aplicacao
+### 7. Configurar o arquivo de ambiente da aplicação
 
 Crie `config.php` a partir do modelo:
 
@@ -146,16 +146,16 @@ Ajuste obrigatoriamente:
 - `APP_URL`
 - `DOC_ENCRYPTION_KEY`
 
-Significado de cada parametro:
+Significado de cada parâmetro:
 
-- `DB_HOST`: endereco do servidor MySQL. Em instalacao local no mesmo servidor da aplicacao, normalmente `127.0.0.1`.
-- `DB_NAME`: nome do banco de dados da aplicacao. Neste projeto, o padrao utilizado e `gedlab`.
-- `DB_USER`: usuario MySQL que a aplicacao vai usar para conectar no banco (exemplo: `geduser`).
-- `DB_PASS`: senha do usuario informado em `DB_USER`.
-- `APP_URL`: URL base da aplicacao. Deve refletir como o sistema sera acessado no navegador (exemplo: `http://gedlab.local` ou `http://SEU_IP`).
+- `DB_HOST`: endereço do servidor MySQL. Em instalação local no mesmo servidor da aplicação, normalmente `127.0.0.1`.
+- `DB_NAME`: nome do banco de dados da aplicação. Neste projeto, o padrão utilizado é `gedlab`.
+- `DB_USER`: usuário MySQL que a aplicação vai usar para conectar no banco (exemplo: `geduser`).
+- `DB_PASS`: senha do usuário informado em `DB_USER`.
+- `APP_URL`: URL base da aplicação. Deve refletir como o sistema será acessado no navegador (exemplo: `http://gedlab.local` ou `http://SEU_IP`).
 - `DOC_ENCRYPTION_KEY`: chave de criptografia dos documentos sigilosos, em hexadecimal, com 64 caracteres (32 bytes).
 
-Exemplo didatico de configuracao:
+Exemplo didático de configuração:
 
 ```php
 define('DB_HOST', '127.0.0.1');
@@ -169,8 +169,8 @@ define('DOC_ENCRYPTION_KEY', hex2bin('0123456789abcdef0123456789abcdef0123456789
 
 Importante sobre a chave `DOC_ENCRYPTION_KEY`:
 
-- nao altere a chave apos iniciar o uso em producao, pois documentos sigilosos antigos podem se tornar ilegiveis
-- mantenha essa chave em sigilo e fora de versionamento publico
+- não altere a chave após iniciar o uso em produção, pois documentos sigilosos antigos podem se tornar ilegíveis
+- mantenha essa chave em sigilo e fora de versionamento público
 
 Para gerar uma chave segura de 32 bytes (64 caracteres hex):
 
@@ -178,15 +178,15 @@ Para gerar uma chave segura de 32 bytes (64 caracteres hex):
 php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"
 ```
 
-### Passo 8. Fortalecer a instalacao do MySQL (recomendado)
+### 8. Fortalecer a instalação do MySQL (recomendado)
 
 ```bash
 sudo mysql_secure_installation
 ```
 
-Siga o assistente para definir senha de `root` e opcoes de seguranca.
+Siga o assistente para definir senha de `root` e opções de segurança.
 
-### Passo 9. Criar banco e tabelas da aplicacao
+### 9. Criar banco e tabelas da aplicação
 
 Com `root` do MySQL:
 
@@ -194,19 +194,19 @@ Com `root` do MySQL:
 mysql -u root -p < database.sql
 ```
 
-### Passo 10. Criar usuarios iniciais da aplicacao
+### 10. Criar usuários iniciais da aplicação
 
 ```bash
 php seed_users.php
 ```
 
-Usuarios padrao criados:
+Usuários padrão criados:
 
 - `admin` / `admin123`
 - `analista` / `analista123`
 - `auditor` / `auditor123`
 
-### Passo 11. Ajustar permissoes de arquivos
+### 11. Ajustar permissões de arquivos
 
 ```bash
 sudo chown -R www-data:www-data /var/www/gedlab
@@ -214,7 +214,7 @@ sudo find /var/www/gedlab -type d -exec chmod 755 {} \;
 sudo find /var/www/gedlab -type f -exec chmod 644 {} \;
 ```
 
-### Passo 12. Criar VirtualHost do Apache
+### 12. Criar VirtualHost do Apache
 
 Crie o arquivo `/etc/apache2/sites-available/gedlab.conf`:
 
@@ -222,7 +222,7 @@ Crie o arquivo `/etc/apache2/sites-available/gedlab.conf`:
 sudo nano /etc/apache2/sites-available/gedlab.conf
 ```
 
-Conteudo sugerido:
+Conteúdo sugerido:
 
 ```apache
 <VirtualHost *:80>
@@ -239,7 +239,7 @@ Conteudo sugerido:
 </VirtualHost>
 ```
 
-### Passo 13. Ativar site e mod_rewrite
+### 13. Ativar site e mod_rewrite
 
 ```bash
 sudo a2enmod rewrite
@@ -248,9 +248,9 @@ sudo a2dissite 000-default.conf
 sudo systemctl reload apache2
 ```
 
-### Passo 14. Configurar resolucao local de nome
+### 14. Configurar resolução local de nome
 
-No servidor local (ou maquina cliente de teste), edite `/etc/hosts`:
+No servidor local (ou máquina cliente de teste), edite `/etc/hosts`:
 
 ```bash
 sudo nano /etc/hosts
@@ -262,7 +262,7 @@ Adicione:
 127.0.0.1 gedlab.local
 ```
 
-### Passo 15. Testar acesso
+### 15. Testar acesso
 
 Abra no navegador:
 
@@ -270,40 +270,48 @@ Abra no navegador:
 http://IP-DO-SERVIDOR
 ```
 
-### Passo 16. Checklist de validacao
+### 16. ✅ Checklist rápido de validação (sem upload)
 
-- login funcionando
-- upload de documento funcionando
-- assinatura digital funcionando
-- verificacao de assinatura funcionando
-- auditoria exibindo cadeia integra
+- login funcionando com usuário válido
+- acesso ao painel principal (`dashboard.php`)
+- acesso à área de auditoria (`audit.php`)
+- acesso à tela de assinatura (`sign_document.php`)
+- acesso à tela de verificação (`verify_signature.php`)
 
-### Passo 17. Recomendacoes para producao
+### 17. 🚀 Recomendações para produção
 
 - habilitar HTTPS com certificado TLS (por exemplo, Let's Encrypt)
-- usar backup periodico do banco de dados
-- alterar senhas padrao imediatamente apos a instalacao
-- nao versionar `config.php` com credenciais reais
-- preservar a mesma `DOC_ENCRYPTION_KEY` para nao invalidar documentos sigilosos antigos
+- usar backup periódico do banco de dados
+- alterar senhas padrão imediatamente após a instalação
+- não versionar `config.php` com credenciais reais
+- preservar a mesma `DOC_ENCRYPTION_KEY` para não invalidar documentos sigilosos antigos
 
-## Fluxo Operacional
+## 🔄 Fluxo Operacional
 
-1. O usuario realiza autenticacao no sistema.
-2. Um documento pode ser enviado com ou sem classificacao de sigilo.
-3. Documentos sigilosos sao criptografados antes do armazenamento.
+1. O usuário realiza autenticação no sistema.
+2. Um documento pode ser enviado com ou sem classificação de sigilo.
+3. Documentos sigilosos são criptografados antes do armazenamento.
 4. O documento pode ser assinado digitalmente com certificado pessoal.
 5. A assinatura armazenada pode ser verificada posteriormente.
-6. Eventos relevantes sao registrados na trilha de auditoria.
+6. Eventos relevantes são registrados na trilha de auditoria.
 
-## Atividades
+## 🧪 Atividades
 
-Os testes abaixo podem ser usados como roteiro de validacao funcional e de seguranca em contexto academico.
+Os testes abaixo podem ser usados como roteiro de validação funcional e de segurança em contexto acadêmico.
 
-### Tarefa 1. Geracao de chave pessoal em `.p12` com OpenSSL
+### Tarefa 1. 🔐 Geração de chave pessoal em `.p12` com OpenSSL
 
-Objetivo: gerar um certificado de teste para assinatura digital.
+Objetivo: gerar um certificado de teste para assinatura digital sem erro de permissão em `/var/www/gedlab`.
 
-Comandos de exemplo:
+Passo 1. Ir para o diretório pessoal do usuário Ubuntu:
+
+```bash
+cd ~
+mkdir -p gedlab-cert
+cd gedlab-cert
+```
+
+Passo 2. Gerar chave privada, certificado e arquivo `.p12`:
 
 ```bash
 openssl genrsa -out chave_privada.pem 2048
@@ -311,31 +319,43 @@ openssl req -new -x509 -key chave_privada.pem -out certificado.pem -days 365 -su
 openssl pkcs12 -export -out usuario_teste.p12 -inkey chave_privada.pem -in certificado.pem -name "Usuario Teste"
 ```
 
-Observacao: o ultimo comando solicitara uma senha para proteger o arquivo `.p12`.
+Observação: o último comando solicitará uma senha para proteger o arquivo `.p12`.
 
-### Tarefa 2. Envio, assinatura e criptografia de documentos
+Passo 3. Copiar o `.p12` para a pasta do projeto (se necessário):
 
-Objetivo: verificar o fluxo completo da aplicacao para documentos comuns e sigilosos.
+```bash
+cp ~/gedlab-cert/usuario_teste.p12 /var/www/gedlab/
+```
+
+Se houver erro de permissão nesse passo, use:
+
+```bash
+sudo cp ~/gedlab-cert/usuario_teste.p12 /var/www/gedlab/
+```
+
+### Tarefa 2. 📄 Envio, assinatura e criptografia de documentos
+
+Objetivo: verificar o fluxo completo da aplicação para documentos comuns e sigilosos.
 
 Procedimento sugerido:
 
-1. Fazer login com usuario valido.
-2. Enviar um documento sem marcar sigilo e confirmar exibicao no painel.
-3. Enviar outro documento marcando a opcao de sigilo.
+1. Fazer login com usuário válido.
+2. Enviar um documento sem marcar sigilo e confirmar exibição no painel.
+3. Enviar outro documento marcando a opção de sigilo.
 4. Assinar os dois documentos com certificado `.p12`.
-5. Validar assinatura na tela de verificacao.
+5. Validar assinatura na tela de verificação.
 6. Conferir os eventos na tela de auditoria.
 
 Resultados esperados:
 
-- upload concluido nos dois cenarios
+- upload concluído nos dois cenários
 - documento sigiloso marcado com indicador de sigilo
-- assinatura registrada como valida
-- eventos de upload, assinatura e visualizacao presentes na auditoria
+- assinatura registrada como válida
+- eventos de upload, assinatura e visualização presentes na auditoria
 
-### Tarefa 3. Corrupcao controlada de registro da auditoria
+### Tarefa 3. 🧬 Corrupção controlada de registro da auditoria
 
-Objetivo: demonstrar que alteracoes indevidas em registros comprometem a integridade da cadeia.
+Objetivo: demonstrar que alterações indevidas em registros comprometem a integridade da cadeia.
 
 Passo 1. Anotar o valor original (exemplo com ID 1):
 
@@ -343,7 +363,7 @@ Passo 1. Anotar o valor original (exemplo com ID 1):
 mysql -u root -p -D gedlab -e "SELECT id, event_time FROM audit_chain WHERE id = 1;"
 ```
 
-Passo 2. Corromper o horario de forma controlada:
+Passo 2. Corromper o horário de forma controlada:
 
 ```bash
 mysql -u root -p -D gedlab -e "UPDATE audit_chain SET event_time = '2030-01-01 00:00:00' WHERE id = 1;"
@@ -351,7 +371,7 @@ mysql -u root -p -D gedlab -e "UPDATE audit_chain SET event_time = '2030-01-01 0
 
 Passo 3. Abrir a tela de auditoria e verificar o resultado esperado:
 
-- status da cadeia deve indicar inconsistencia/corrupcao
+- status da cadeia deve indicar inconsistência/corrupção
 
 Passo 4. Restaurar o valor original anotado no Passo 1:
 
@@ -359,17 +379,18 @@ Passo 4. Restaurar o valor original anotado no Passo 1:
 mysql -u root -p -D gedlab -e "UPDATE audit_chain SET event_time = 'VALOR_ORIGINAL_AQUI' WHERE id = 1;"
 ```
 
-Importante: em ambiente de teste, depois da restauracao, execute o procedimento de reparo da cadeia ja implementado no projeto para normalizar os hashes registrados.
+Importante: em ambiente de teste, depois da restauração, execute o procedimento de reparo da cadeia já implementado no projeto para normalizar os hashes registrados.
 
-### Tarefa 4. Implementacao de HTTPS com Let's Encrypt
+### Tarefa 4. 🌐 Implementação de HTTPS com Let's Encrypt
 
-Objetivo: reforcar a seguranca do acesso web com criptografia TLS.
+Objetivo: reforçar a segurança do acesso web com criptografia TLS.
 
-Pre-requisitos:
+Pré-requisitos obrigatórios:
 
-- dominio apontando para o servidor (criar gratuitamente no No-IP (noip.com))
+- VM em nuvem com IP público (AWS, Azure, GCP, OCI, etc.)
+- domínio apontando para o IP público da VM (pode usar No-IP)
 - Apache ativo
-- portas 80 e 443 liberadas no firewall
+- portas 80 e 443 liberadas no firewall/security group
 
 Comandos de exemplo no Ubuntu:
 
@@ -379,7 +400,7 @@ sudo apt install -y certbot python3-certbot-apache
 sudo certbot --apache -d seu-dominio.com -d www.seu-dominio.com
 ```
 
-Renovacao automatica (verificacao):
+Renovação automática (verificação):
 
 ```bash
 sudo certbot renew --dry-run
@@ -389,35 +410,52 @@ Resultados esperados:
 
 - acesso via `https://seu-dominio.com`
 - redirecionamento HTTP -> HTTPS ativo
-- certificado valido emitido por Let's Encrypt
+- certificado válido emitido por Let's Encrypt
 
-## Consideracoes de Seguranca
+## 💻 Transferir o `.p12` para estações Windows sem WinSCP
 
-- o arquivo `config.php` nao deve ser publicado com credenciais reais
-- certificados `.p12` e `.pfx` utilizados em testes nao devem ser enviados ao repositorio
-- a chave `DOC_ENCRYPTION_KEY` deve ser unica e mantida em sigilo
-- a alteracao da chave de criptografia inviabiliza a abertura de documentos sigilosos ja armazenados
-- recomenda-se a alteracao das senhas padrao apos a instalacao inicial
+Se os alunos não tiverem WinSCP, é possível usar o comando `scp` no PowerShell.
 
-## Documentacao Complementar
+Exemplo (executado na estação Windows):
+
+```powershell
+scp -i C:\caminho\para\chave-da-vm.pem usuario@IP_DA_VM:~/gedlab-cert/usuario_teste.p12 C:\Users\Public\Downloads\usuario_teste.p12
+```
+
+Observações:
+
+- substitua `usuario` pelo usuário da VM (exemplo: `ubuntu`)
+- substitua `IP_DA_VM` pelo IP público da VM
+- ajuste o caminho da chave privada `.pem`
+- no Windows 10/11, o `scp` já vem no cliente OpenSSH na maioria dos casos
+
+## 🔒 Considerações de Segurança
+
+- o arquivo `config.php` não deve ser publicado com credenciais reais
+- certificados `.p12` e `.pfx` utilizados em testes não devem ser enviados ao repositório
+- a chave `DOC_ENCRYPTION_KEY` deve ser única e mantida em sigilo
+- a alteração da chave de criptografia inviabiliza a abertura de documentos sigilosos já armazenados
+- recomenda-se a alteração das senhas padrão após a instalação inicial
+
+## 📚 Documentação Complementar
 
 A pasta `docs/` foi criada para concentrar material complementar, como:
 
-- capturas de tela da aplicacao
+- capturas de tela da aplicação
 - diagramas de arquitetura
-- relatorios tecnicos
-- instrucoes de demonstracao
+- relatórios técnicos
+- instruções de demonstração
 
-Consulte [docs/README.md](docs/README.md) para a organizacao sugerida desse material.
+Consulte [docs/README.md](docs/README.md) para a organização sugerida desse material.
 
-## Possiveis Extensoes Futuras
+## 🔭 Possíveis Extensões Futuras
 
-- administracao de usuarios e perfis
-- filtros avancados e pesquisa textual
-- relatorios exportaveis de auditoria
+- administração de usuários e perfis
+- filtros avançados e pesquisa textual
+- relatórios exportáveis de auditoria
 - armazenamento externo de documentos
-- politicas mais granulares de autorizacao
+- políticas mais granulares de autorização
 
-## Licenca
+## 📄 Licença
 
-Este projeto esta licenciado sob os termos da licenca MIT. Consulte o arquivo `LICENSE`.
+Este projeto está licenciado sob os termos da licença MIT. Consulte o arquivo `LICENSE`.
