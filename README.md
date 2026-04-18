@@ -161,7 +161,7 @@ Exemplo didatico de configuracao:
 define('DB_HOST', '127.0.0.1');
 define('DB_NAME', 'gedlab');
 define('DB_USER', 'geduser');
-define('DB_PASS', 'SuaSenhaForteAqui');
+define('DB_PASS', 'Z9#vL2!qR7@pX4$mT8&c');
 
 define('APP_URL', 'http://gedlab.local');
 define('DOC_ENCRYPTION_KEY', hex2bin('0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'));
