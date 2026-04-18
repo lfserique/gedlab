@@ -70,7 +70,7 @@ O sistema foi organizado em arquivos PHP com responsabilidades bem definidas.
   - `openssl`
   - `fileinfo`
 
-## Tutorial Didatico: Ubuntu Linux + Apache + PHP + MySQL
+## Tutorial Didade Instalação: Ubuntu Linux + Apache + PHP + MySQL
 
 Esta secao apresenta um roteiro completo, do ambiente limpo ate a aplicacao em funcionamento.
 
@@ -91,8 +91,8 @@ sudo apt install -y php libapache2-mod-php php-mysql php-cli php-common php-mbst
 ### Passo 3. Verificar servicos
 
 ```bash
-sudo systemctl status apache2 --no-pager
-sudo systemctl status mysql --no-pager
+sudo systemctl status apache2
+sudo systemctl status mysql
 ```
 
 Se necessario, inicie e habilite os servicos:
@@ -124,7 +124,7 @@ Escolha um diretorio de publicacao. Neste tutorial, sera usado `/var/www/gedlab`
 
 ```bash
 cd /var/www
-sudo git clone <URL_DO_SEU_REPOSITORIO> gedlab
+sudo git clone https://github.com/lfserique/gedlab gedlab
 cd gedlab
 ```
 
@@ -146,13 +146,39 @@ Ajuste obrigatoriamente:
 - `APP_URL`
 - `DOC_ENCRYPTION_KEY`
 
+Significado de cada parametro:
+
+- `DB_HOST`: endereco do servidor MySQL. Em instalacao local no mesmo servidor da aplicacao, normalmente `127.0.0.1`.
+- `DB_NAME`: nome do banco de dados da aplicacao. Neste projeto, o padrao utilizado e `gedlab`.
+- `DB_USER`: usuario MySQL que a aplicacao vai usar para conectar no banco (exemplo: `geduser`).
+- `DB_PASS`: senha do usuario informado em `DB_USER`.
+- `APP_URL`: URL base da aplicacao. Deve refletir como o sistema sera acessado no navegador (exemplo: `http://gedlab.local` ou `http://SEU_IP`).
+- `DOC_ENCRYPTION_KEY`: chave de criptografia dos documentos sigilosos, em hexadecimal, com 64 caracteres (32 bytes).
+
+Exemplo didatico de configuracao:
+
+```php
+define('DB_HOST', '127.0.0.1');
+define('DB_NAME', 'gedlab');
+define('DB_USER', 'geduser');
+define('DB_PASS', 'SuaSenhaForteAqui');
+
+define('APP_URL', 'http://gedlab.local');
+define('DOC_ENCRYPTION_KEY', hex2bin('0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'));
+```
+
+Importante sobre a chave `DOC_ENCRYPTION_KEY`:
+
+- nao altere a chave apos iniciar o uso em producao, pois documentos sigilosos antigos podem se tornar ilegiveis
+- mantenha essa chave em sigilo e fora de versionamento publico
+
 Para gerar uma chave segura de 32 bytes (64 caracteres hex):
 
 ```bash
 php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"
 ```
 
-### Passo 8. Endurecer instalacao do MySQL (recomendado)
+### Passo 8. Fortalecer a instalacao do MySQL (recomendado)
 
 ```bash
 sudo mysql_secure_installation
@@ -241,7 +267,7 @@ Adicione:
 Abra no navegador:
 
 ```text
-http://gedlab.local
+http://IP-DO-SERVIDOR
 ```
 
 ### Passo 16. Checklist de validacao
@@ -268,6 +294,102 @@ http://gedlab.local
 4. O documento pode ser assinado digitalmente com certificado pessoal.
 5. A assinatura armazenada pode ser verificada posteriormente.
 6. Eventos relevantes sao registrados na trilha de auditoria.
+
+## Atividades
+
+Os testes abaixo podem ser usados como roteiro de validacao funcional e de seguranca em contexto academico.
+
+### Teste 1. Envio, assinatura e criptografia de documentos
+
+Objetivo: verificar o fluxo completo da aplicacao para documentos comuns e sigilosos.
+
+Procedimento sugerido:
+
+1. Fazer login com usuario valido.
+2. Enviar um documento sem marcar sigilo e confirmar exibicao no painel.
+3. Enviar outro documento marcando a opcao de sigilo.
+4. Assinar os dois documentos com certificado `.p12`.
+5. Validar assinatura na tela de verificacao.
+6. Conferir os eventos na tela de auditoria.
+
+Resultados esperados:
+
+- upload concluido nos dois cenarios
+- documento sigiloso marcado com indicador de sigilo
+- assinatura registrada como valida
+- eventos de upload, assinatura e visualizacao presentes na auditoria
+
+### Teste 2. Geracao de chave pessoal em `.p12` com OpenSSL
+
+Objetivo: gerar um certificado de teste para assinatura digital.
+
+Comandos de exemplo:
+
+```bash
+openssl genrsa -out chave_privada.pem 2048
+openssl req -new -x509 -key chave_privada.pem -out certificado.pem -days 365 -subj "/C=BR/ST=SP/L=SaoPaulo/O=GEDLab/OU=Teste/CN=UsuarioTeste"
+openssl pkcs12 -export -out usuario_teste.p12 -inkey chave_privada.pem -in certificado.pem -name "Usuario Teste"
+```
+
+Observacao: o ultimo comando solicitara uma senha para proteger o arquivo `.p12`.
+
+### Teste 3. Corrupcao controlada de registro da auditoria
+
+Objetivo: demonstrar que alteracoes indevidas em registros comprometem a integridade da cadeia.
+
+Passo 1. Anotar o valor original (exemplo com ID 1):
+
+```bash
+mysql -u root -p -D gedlab -e "SELECT id, event_time FROM audit_chain WHERE id = 1;"
+```
+
+Passo 2. Corromper o horario de forma controlada:
+
+```bash
+mysql -u root -p -D gedlab -e "UPDATE audit_chain SET event_time = '2030-01-01 00:00:00' WHERE id = 1;"
+```
+
+Passo 3. Abrir a tela de auditoria e verificar o resultado esperado:
+
+- status da cadeia deve indicar inconsistencia/corrupcao
+
+Passo 4. Restaurar o valor original anotado no Passo 1:
+
+```bash
+mysql -u root -p -D gedlab -e "UPDATE audit_chain SET event_time = 'VALOR_ORIGINAL_AQUI' WHERE id = 1;"
+```
+
+Importante: em ambiente de teste, depois da restauracao, execute o procedimento de reparo da cadeia ja implementado no projeto para normalizar os hashes registrados.
+
+### Teste 4. Implementacao de HTTPS com Let's Encrypt
+
+Objetivo: reforcar a seguranca do acesso web com criptografia TLS.
+
+Pre-requisitos:
+
+- dominio apontando para o servidor (criar gratuitamente no No-IP (noip.com))
+- Apache ativo
+- portas 80 e 443 liberadas no firewall
+
+Comandos de exemplo no Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install -y certbot python3-certbot-apache
+sudo certbot --apache -d seu-dominio.com -d www.seu-dominio.com
+```
+
+Renovacao automatica (verificacao):
+
+```bash
+sudo certbot renew --dry-run
+```
+
+Resultados esperados:
+
+- acesso via `https://seu-dominio.com`
+- redirecionamento HTTP -> HTTPS ativo
+- certificado valido emitido por Let's Encrypt
 
 ## Consideracoes de Seguranca
 
