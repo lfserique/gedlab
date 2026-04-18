@@ -299,7 +299,21 @@ http://IP-DO-SERVIDOR
 
 Os testes abaixo podem ser usados como roteiro de validacao funcional e de seguranca em contexto academico.
 
-### Teste 1. Envio, assinatura e criptografia de documentos
+### Teste 1. Geracao de chave pessoal em `.p12` com OpenSSL
+
+Objetivo: gerar um certificado de teste para assinatura digital.
+
+Comandos de exemplo:
+
+```bash
+openssl genrsa -out chave_privada.pem 2048
+openssl req -new -x509 -key chave_privada.pem -out certificado.pem -days 365 -subj "/C=BR/ST=SP/L=SaoPaulo/O=GEDLab/OU=Teste/CN=UsuarioTeste"
+openssl pkcs12 -export -out usuario_teste.p12 -inkey chave_privada.pem -in certificado.pem -name "Usuario Teste"
+```
+
+Observacao: o ultimo comando solicitara uma senha para proteger o arquivo `.p12`.
+
+### Teste 2. Envio, assinatura e criptografia de documentos
 
 Objetivo: verificar o fluxo completo da aplicacao para documentos comuns e sigilosos.
 
@@ -318,20 +332,6 @@ Resultados esperados:
 - documento sigiloso marcado com indicador de sigilo
 - assinatura registrada como valida
 - eventos de upload, assinatura e visualizacao presentes na auditoria
-
-### Teste 2. Geracao de chave pessoal em `.p12` com OpenSSL
-
-Objetivo: gerar um certificado de teste para assinatura digital.
-
-Comandos de exemplo:
-
-```bash
-openssl genrsa -out chave_privada.pem 2048
-openssl req -new -x509 -key chave_privada.pem -out certificado.pem -days 365 -subj "/C=BR/ST=SP/L=SaoPaulo/O=GEDLab/OU=Teste/CN=UsuarioTeste"
-openssl pkcs12 -export -out usuario_teste.p12 -inkey chave_privada.pem -in certificado.pem -name "Usuario Teste"
-```
-
-Observacao: o ultimo comando solicitara uma senha para proteger o arquivo `.p12`.
 
 ### Teste 3. Corrupcao controlada de registro da auditoria
 
