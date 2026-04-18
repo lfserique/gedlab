@@ -299,7 +299,7 @@ http://IP-DO-SERVIDOR
 
 Os testes abaixo podem ser usados como roteiro de validacao funcional e de seguranca em contexto academico.
 
-### Teste 1. Geracao de chave pessoal em `.p12` com OpenSSL
+### Tarefa 1. Geracao de chave pessoal em `.p12` com OpenSSL
 
 Objetivo: gerar um certificado de teste para assinatura digital.
 
@@ -313,7 +313,7 @@ openssl pkcs12 -export -out usuario_teste.p12 -inkey chave_privada.pem -in certi
 
 Observacao: o ultimo comando solicitara uma senha para proteger o arquivo `.p12`.
 
-### Teste 2. Envio, assinatura e criptografia de documentos
+### Tarefa 2. Envio, assinatura e criptografia de documentos
 
 Objetivo: verificar o fluxo completo da aplicacao para documentos comuns e sigilosos.
 
@@ -333,7 +333,7 @@ Resultados esperados:
 - assinatura registrada como valida
 - eventos de upload, assinatura e visualizacao presentes na auditoria
 
-### Teste 3. Corrupcao controlada de registro da auditoria
+### Tarefa 3. Corrupcao controlada de registro da auditoria
 
 Objetivo: demonstrar que alteracoes indevidas em registros comprometem a integridade da cadeia.
 
@@ -361,7 +361,7 @@ mysql -u root -p -D gedlab -e "UPDATE audit_chain SET event_time = 'VALOR_ORIGIN
 
 Importante: em ambiente de teste, depois da restauracao, execute o procedimento de reparo da cadeia ja implementado no projeto para normalizar os hashes registrados.
 
-### Teste 4. Implementacao de HTTPS com Let's Encrypt
+### Tarefa 4. Implementacao de HTTPS com Let's Encrypt
 
 Objetivo: reforcar a seguranca do acesso web com criptografia TLS.
 
