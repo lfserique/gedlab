@@ -54,17 +54,15 @@ O sistema foi organizado em arquivos PHP com responsabilidades bem definidas.
 - `crypto.php`: implementa a criptografia e a descriptografia dos documentos
 - `database.sql`: contém a estrutura inicial do banco de dados
 
-## 🛠️ Tecnologias Utilizadas
-
-- PHP 8.2 ou superior
-- MySQL 8.x ou MariaDB compatível
-- HTML e CSS para a interface
-- OpenSSL para operações criptográficas e assinatura digital
-
 ## 📋 Requisitos de Execução
 
 - PHP 8.2 ou superior
 - MySQL 8.x ou MariaDB compatível
+- Apache 2.x
+- VM em nuvem com IP público (AWS, Azure, GCP, OCI, etc.)
+- domínio apontando para o IP público da VM (para a etapa de HTTPS)
+- interface web (HTML e CSS)
+- OpenSSL para operações criptográficas e assinatura digital
 - extensões PHP habilitadas:
   - `pdo_mysql`
   - `openssl`
@@ -387,7 +385,6 @@ Objetivo: reforçar a segurança do acesso web com criptografia TLS.
 
 Pré-requisitos obrigatórios:
 
-- VM em nuvem com IP público (AWS, Azure, GCP, OCI, etc.)
 - domínio apontando para o IP público da VM (pode usar No-IP)
 - Apache ativo
 - portas 80 e 443 liberadas no firewall/security group
