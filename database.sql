@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS gedlab CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE USER IF NOT EXISTS 'geduser'@'localhost' IDENTIFIED BY 'TroqueEssaSenhaForte123!';
+CREATE USER IF NOT EXISTS 'geduser'@'localhost' IDENTIFIED BY 'Z9#vL2!qR7@pX4$mT8&c';
 GRANT ALL PRIVILEGES ON gedlab.* TO 'geduser'@'localhost';
 FLUSH PRIVILEGES;
 
