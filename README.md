@@ -70,11 +70,48 @@ O sistema foi organizado em arquivos PHP com responsabilidades bem definidas.
   - `openssl`
   - `fileinfo`
 
+## Ambiente Ubuntu Linux
+
+O projeto pode ser executado em distribuicoes Ubuntu com uma pilha baseada em PHP CLI ou com servidor web dedicado. Para fins didaticos e de desenvolvimento local, recomenda-se inicialmente a execucao com o servidor embutido do PHP.
+
+### Dependencias recomendadas no Ubuntu
+
+Em versoes recentes do Ubuntu, instale:
+
+```bash
+sudo apt update
+sudo apt install -y git php php-cli php-mysql php-openssl php-common php-mbstring php-xml php-curl mariadb-server
+```
+
+Observacao:
+
+- em algumas versoes do Ubuntu, `php-openssl` pode ja estar incluido no pacote principal do PHP
+- caso utilize MySQL Community Server em vez de MariaDB, os comandos SQL permanecem equivalentes para este projeto
+
+### Verificacao das extensoes PHP
+
+Confirme se as extensoes necessarias estao ativas:
+
+```bash
+php -m | grep -E "pdo_mysql|openssl|fileinfo"
+```
+
+Se necessario, habilite os modulos instalados e reinicie o servico PHP ou o servidor web correspondente.
+
 ## Procedimento de Instalacao
 
 ### 1. Obter o codigo-fonte
 
+No Windows PowerShell:
+
 ```powershell
+git clone <URL_DO_SEU_REPOSITORIO>
+cd ged
+```
+
+No Ubuntu Linux:
+
+```bash
 git clone <URL_DO_SEU_REPOSITORIO>
 cd ged
 ```
@@ -83,8 +120,16 @@ cd ged
 
 Utilize `config.example.php` como modelo.
 
+No Windows PowerShell:
+
 ```powershell
 Copy-Item config.example.php config.php
+```
+
+No Ubuntu Linux:
+
+```bash
+cp config.example.php config.php
 ```
 
 Em seguida, ajuste os seguintes parametros no arquivo `config.php`:
@@ -98,7 +143,7 @@ Em seguida, ajuste os seguintes parametros no arquivo `config.php`:
 
 Para gerar uma chave hexadecimal de 32 bytes:
 
-```powershell
+```bash
 php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"
 ```
 
@@ -106,7 +151,17 @@ php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"
 
 Importe o arquivo `database.sql` no servidor MySQL.
 
-```powershell
+Em ambientes Linux:
+
+```bash
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+mysql -u root -p < database.sql
+```
+
+Em ambientes com redirecionamento tradicional:
+
+```bash
 mysql -u root -p < database.sql
 ```
 
@@ -117,6 +172,14 @@ mysql -u root -p -e "source C:/caminho/para/o/projeto/database.sql"
 ```
 
 ### 4. Popular usuarios iniciais
+
+No Ubuntu Linux:
+
+```bash
+php seed_users.php
+```
+
+No Windows PowerShell:
 
 ```powershell
 php seed_users.php
@@ -138,7 +201,22 @@ extension=openssl
 extension=fileinfo
 ```
 
+No Ubuntu, o arquivo costuma estar em caminhos semelhantes a:
+
+- `/etc/php/8.2/cli/php.ini`
+- `/etc/php/8.2/apache2/php.ini`
+
+O caminho exato depende da versao instalada e do modo de execucao.
+
 ### 6. Executar a aplicacao localmente
+
+No Ubuntu Linux:
+
+```bash
+php -S 127.0.0.1:8000 -t .
+```
+
+No Windows PowerShell:
 
 ```powershell
 php -S 127.0.0.1:8000 -t .
@@ -149,6 +227,122 @@ A aplicacao podera ser acessada em:
 ```text
 http://127.0.0.1:8000
 ```
+
+### 7. Permissoes e observacoes para Linux
+
+Em cenarios com Apache ou Nginx, verifique:
+
+- permissao de leitura do projeto pelo usuario do servidor web
+- configuracao correta do `DocumentRoot` ou do diretio servido
+- disponibilidade das extensoes `openssl`, `fileinfo` e `pdo_mysql` no SAPI utilizado pelo servidor
+
+Caso utilize Apache no Ubuntu, uma configuracao inicial comum envolve:
+
+```bash
+sudo apt install -y apache2 libapache2-mod-php
+sudo systemctl restart apache2
+```
+
+Para demonstracoes, entretanto, o servidor embutido do PHP continua sendo a alternativa mais simples.
+
+## Exemplo de Deploy em Ubuntu com Apache
+
+Esta secao apresenta um exemplo simplificado de publicacao da aplicacao em um servidor Ubuntu com Apache.
+
+### 1. Instalar os componentes necessarios
+
+```bash
+sudo apt update
+sudo apt install -y apache2 php libapache2-mod-php php-mysql php-mbstring php-xml php-curl mariadb-server git
+```
+
+### 2. Publicar o codigo no diretorio do servidor
+
+Um caminho comum de implantacao e `/var/www/gedlab`.
+
+```bash
+cd /var/www
+sudo git clone <URL_DO_SEU_REPOSITORIO> gedlab
+cd gedlab
+```
+
+### 3. Criar o arquivo de configuracao da aplicacao
+
+```bash
+sudo cp config.example.php config.php
+sudo nano config.php
+```
+
+Defina corretamente:
+
+- credenciais do banco de dados
+- `APP_URL`
+- `DOC_ENCRYPTION_KEY`
+
+### 4. Criar a base de dados
+
+```bash
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+mysql -u root -p < database.sql
+php seed_users.php
+```
+
+### 5. Ajustar permissao de leitura do projeto
+
+```bash
+sudo chown -R www-data:www-data /var/www/gedlab
+sudo find /var/www/gedlab -type d -exec chmod 755 {} \;
+sudo find /var/www/gedlab -type f -exec chmod 644 {} \;
+```
+
+### 6. Criar o VirtualHost do Apache
+
+Crie o arquivo `/etc/apache2/sites-available/gedlab.conf` com o conteudo abaixo:
+
+```apache
+<VirtualHost *:80>
+  ServerName gedlab.local
+  DocumentRoot /var/www/gedlab
+
+  <Directory /var/www/gedlab>
+    AllowOverride All
+    Require all granted
+  </Directory>
+
+  ErrorLog ${APACHE_LOG_DIR}/gedlab_error.log
+  CustomLog ${APACHE_LOG_DIR}/gedlab_access.log combined
+</VirtualHost>
+```
+
+### 7. Habilitar o site e reiniciar o Apache
+
+```bash
+sudo a2ensite gedlab.conf
+sudo a2dissite 000-default.conf
+sudo systemctl reload apache2
+```
+
+Se desejar testar localmente com nome amigavel, adicione no arquivo `/etc/hosts` da propria maquina cliente:
+
+```text
+127.0.0.1 gedlab.local
+```
+
+### 8. Acessar a aplicacao
+
+Depois da configuracao, a aplicacao podera ser acessada por:
+
+```text
+http://gedlab.local
+```
+
+### Observacoes sobre o deploy com Apache
+
+- em ambiente de producao, recomenda-se uso de HTTPS com certificado TLS
+- o arquivo `config.php` deve permanecer fora do versionamento com credenciais reais
+- a chave `DOC_ENCRYPTION_KEY` deve ser preservada entre deploys para nao invalidar documentos sigilosos ja armazenados
+- caso a versao do PHP instalada seja diferente, o caminho do `php.ini` e dos modulos habilitados pode variar
 
 ## Fluxo Operacional
 
