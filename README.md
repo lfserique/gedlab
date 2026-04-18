@@ -137,15 +137,6 @@ sudo nano config.php
 
 Ajuste obrigatoriamente:
 
-- `DB_HOST`
-- `DB_NAME`
-- `DB_USER`
-- `DB_PASS`
-- `APP_URL`
-- `DOC_ENCRYPTION_KEY`
-
-Significado de cada parâmetro:
-
 - `DB_HOST`: endereço do servidor MySQL. Em instalação local no mesmo servidor da aplicação, normalmente `127.0.0.1`.
 - `DB_NAME`: nome do banco de dados da aplicação. Neste projeto, o padrão utilizado é `gedlab`.
 - `DB_USER`: usuário MySQL que a aplicação vai usar para conectar no banco (exemplo: `geduser`).
@@ -443,7 +434,7 @@ A pasta `docs/` foi criada para concentrar material complementar, como:
 - relatórios técnicos
 - instruções de demonstração
 
-Consulte [docs/README.md](docs/README.md) para a organização sugerida desse material.
+Consulte [docs/README.md](docs/README.md) para maiores informações.
 
 ## 🔭 Possíveis Extensões Futuras
 
